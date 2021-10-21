@@ -11,5 +11,8 @@ function(Controller) {
         onInit: function(){            
             
         },
+        onOpenDialogHeader: function() {
+            this.getOwnerComponent().openHelloDialog();
+        }
     });
 });
