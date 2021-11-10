@@ -6,7 +6,17 @@ sap.ui.define([
 /**
  * param  { typeof sap.m.MessageBox }
  */
-function(require, factory) {
+function(mockserver, MessageBox) {
     'use strict';
     
+    var aMockServers = [];
+
+    //inicializar mock server
+    aMockServers.push(mockserver.init());
+
+    Promise.all(aMockServers).catch(function(oError) {
+        MessageBox.error(oError.message);
+    }).finally(function(){
+        sap.ui.require(['module:sap/ui/core/ComponentSupport']);
+    });
 });
