@@ -38,10 +38,10 @@ sap.ui.define([
                         //parse manifest for local metadata URI
                         var sJsonFilesUrl = sap.ui.require.toUrl(_sJsonFilesPath);
                         var oMainDataSource = oManifestModel.getProperty("/sap.app/dataSources/mainService");
-                        var sMetaDataUrl = sap.ui.require.toUrl(_sAppPath + oMainDataSource.setting.localUri);
+                        var sMetaDataUrl = sap.ui.require.toUrl(_sAppPath + oMainDataSource.settings.localUri);
 
                         //ensure there is a trailing slash
-                        var sMockServerUrl = oMainDataSource.uri && new URIError(oMainDataSource.uri).absoluteTo(sap.ui.require.toUrl(_sAppPath)).toString();
+                        var sMockServerUrl = oMainDataSource.uri && new URI(oMainDataSource.uri).absoluteTo(sap.ui.require.toUrl(_sAppPath)).toString();
 
                         //crear una instancia mock server o detener la existente para reiniciar
                         if (!oMockServer) {
@@ -55,11 +55,11 @@ sap.ui.define([
                         //configurara mock server con valores por defecto
                         MockServer.config({
                             autoRespond: true,
-                            autoRespondAfter: (oOptionsParameter.delay || oUriParameters.get("serverDelay") || 500)
+                            autoRespondAfter: (oOptions.delay || oUriParameters.get("serverDelay") || 500)
                         });
 
                         //simulate all request
-                        oMockServer.simulate({
+                        oMockServer.simulate(sMetaDataUrl, {
                             sMockdataBaseUrl: sJsonFilesUrl,
                             bGenerateMissingMockData: true
                         });
@@ -83,7 +83,7 @@ sap.ui.define([
                         };
 
                         //simular request errors
-                        var sErrorParam = sOptions.errorType || oUriParameters.get("errorType");
+                        var sErrorParam = oOptions.errorType || oUriParameters.get("errorType");
                         var iErrorCode = sErrorParam === "badRequest" ? 400 : 500;
 
                         if (sErrorParam) {
