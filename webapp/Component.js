@@ -17,6 +17,9 @@ sap.ui.define([
             this.setModel(i18nModel, "i18n");
                 
             this._helloDialog = new HelloDialog(this.getRootControl());
+
+            //inicializar rutas
+            this.getRouter().initialize();
         },
         exit: function() {
              this._helloDialog.destroy();
