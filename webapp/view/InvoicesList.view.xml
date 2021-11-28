@@ -22,7 +22,9 @@
                           type: 'sap.ui.model.type.Currency',
                           formatOptions: {
                               showMeasure : false
-                          }}" numberUnit="{currency>/usd}" numberState="{= ${northwind>ExtendedPrice} > 50 ? 'Success' : 'Error'}">                
+                          }}" numberUnit="{currency>/usd}" numberState="{= ${northwind>ExtendedPrice} > 50 ? 'Success' : 'Error'}"                          
+                         type="Navigation"
+                         press="navigateToDetails">                
             </ObjectListItem>
         </items>
     </List>
